@@ -13,6 +13,36 @@ explore: events {
     relationship: many_to_one
   }
 }
+view: customer_order_facts {
+  derived_table: {
+    sql:
+      SELECT
+        users_id,
+        MIN(DATE(time)) AS first_order_date,
+        SUM(amount) AS lifetime_amount
+      FROM
+        order
+      GROUP BY
+        users_id ;;
+    sql_trigger_value: SELECT FLOOR((UNIX_TIMESTAMP(NOW()) - 60*60*11)/(60*60*11)) ;;
+  }
+  dimension: users_id {
+    type: number
+    primary_key: yes
+    sql: ${TABLE}.users_id ;;
+  }
+  dimension_group: first_order {
+    type: time
+    timeframes: [date, week, month]
+    sql: ${TABLE}.first_order_date ;;
+  }
+  dimension: lifetime_amount {
+    type: number
+    value_format: "0.00"
+    sql: ${TABLE}.lifetime_amount ;;
+  }
+}
+
 
 explore: inventory_items {
   join: products {
