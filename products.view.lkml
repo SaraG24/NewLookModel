@@ -40,10 +40,14 @@ view: products {
   dimension: sku {
     type: string
     sql: ${TABLE}.sku ;;
+    drill_fields: [users.city, products.brand]
+
+
   }
 
   measure: count {
     type: count
     drill_fields: [id, item_name, inventory_items.count]
   }
+
 }
