@@ -1,10 +1,25 @@
 view: users {
   sql_table_name: demo_db.users ;;
 
-  dimension: id {
+#  dimension_group: created {
+#    type: time
+#   timeframes: [date, week, month]
+#   sql: ${TABLE}.creted_for ;;
+#  }
+
+ dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+  }
+dimension: testst_aticvalue {
+    type: string
+    sql: "hello";;
+  }
+
+dimension: test_fixwd {
+    type: string
+    sql: CASE WHEN ${id} IS NOT NULL THEN 'TEST' ELSE 'never happens' END ;;
   }
 
   dimension: age {
@@ -15,6 +30,10 @@ view: users {
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
+  }
+  dimension: test_suggestions {    # only wiht is equal to :)
+    sql: ${TABLE}.city ;;
+    suggestions: ["Dub", "Ranelagh", "vale"]
   }
 
   dimension: country {
@@ -34,6 +53,7 @@ view: users {
       year
     ]
     sql: ${TABLE}.created_at ;;
+    drill_fields: [created_month, created_year, created_time]
   }
 
   dimension: email {
@@ -69,6 +89,11 @@ view: users {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: count_test {
+    type: count_distinct
+    sql: ${city} ;;
   }
 
   # ----- Sets of fields for drilling ------
