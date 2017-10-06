@@ -1,10 +1,11 @@
 view: derived_table_customer_order_facts {
     derived_table: {
+      persist_for: "5 hours"
       sql:
       SELECT
         users_id,
         MIN(DATE(time)) AS first_order_date,
-        SUM(amount) AS lifetime_amount
+        AVERAGE(amount) AS lifetime_amount
       FROM
         order
       GROUP BY
