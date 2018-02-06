@@ -6,7 +6,9 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
+
 explore: events {
+#   sql_always_where: ${user_id} => 0 ;;
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
@@ -53,11 +55,14 @@ explore: inventory_items {
 }
 
 explore: order_items {
+  view_name: order_items
+  from: order_items
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
+
 
   join: orders {
     type: left_outer
@@ -76,8 +81,13 @@ explore: order_items {
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
-}
 
+#   join: order_items {
+#     type: left_outer
+#     sql_on: ${users.id} = ${inventory_items.id} ;;
+#     relationship: many_to_one
+#   }
+}
 explore: orders{
   join: users {
     type: left_outer
@@ -97,6 +107,44 @@ explore: user_data {
     relationship: many_to_one
   }
 }
+view: user_metrics {
+  derived_table: {
+    explore_source: user_data {
+      column: login_count { field: user_data.count }
+      column: user_id {}
+    }
+  }
+  dimension: login_count {
+    type: number
+  }
+  dimension: user_id {}
+  measure: count {
+    type: count
+  }
+}
+
+explore: metrics {
+  extends: [order_items]
+  label: "Order Items two"
+  sql_always_where: ${products.category} = 'Dresses';;
+  fields: [ALL_FIELDS*, -products.rank, -products.category]
+}
+
+# map_layer: countries_layer {
+#   file: "world_countries.json"
+#   property_key: "Country"
+# }
+# map_layer: test_country {
+#   feature_key: "ISO_A3"
+#   file: "world_countries.json"
+#   format: topojson
+#   label: "Test for Map"
+#   max_zoom_level: 12
+#   min_zoom_level: 2
+#   projection: airy
+#   property_key: "Alpha-2"
+#   property_label_key: "OTHER NAME"
+# }
 
 explore: users {}
 

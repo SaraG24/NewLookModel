@@ -7,20 +7,47 @@ view: users {
 #   sql: ${TABLE}.creted_for ;;
 #  }
 
- dimension: id {
-    primary_key: yes
-    type: number
-    sql: ${TABLE}.id ;;
+  dimension: id {
+#     case: {
+#       when: {
+#         sql: ${TABLE}.id > 8634 ;;
+#         label: "It works"
+#       }
+#       when: {
+#         sql: ${TABLE}.id < 8634 ;;
+#         label: "It works too"
+#       }
+#       else: "r"
+#     }
+#     full_suggestions: yes
+#     suggestions: ["It works", "It works too"]
+#     primary_key: yes
+   type: number
+   sql: ${TABLE}.id ;;
   }
-dimension: testst_aticvalue {
+  dimension: testst_aticvalue {
     type: string
     sql: "hello";;
   }
 
-dimension: test_fixwd {
+  dimension: test_fixwd {
     type: string
     sql: CASE WHEN ${id} IS NOT NULL THEN 'TEST' ELSE 'never happens' END ;;
   }
+  dimension: html_test {
+    type: number
+    sql: ${age} ;;
+    html:
+         {% if {{id._value}} <= 20 %}
+         <div style = " background-color: #4FBC89 ; font-size:100%; text-align:right">{{rendered_value}}</div>
+         {% elsif {{id._value}} > 21 and value <= 30 %}
+         <div style = " background-color: #FCF758 ; font-size:100%; text-align:right">{{rendered_value}}</div>
+         {% else %}
+           <p style="color: black; background-color: orange; font-size:100%; text-align:center">{{ rendered_value }}</p>
+         {%endif%} ;;
+  }
+
+
 
   dimension: age {
     type: number
@@ -29,7 +56,10 @@ dimension: test_fixwd {
 
   dimension: city {
     type: string
-    sql: ${TABLE}.city ;;
+    label_from_parameter: test_filter
+    sql: ${TABLE}.{% parameter test_filter %} ;;
+
+#     sql: ${TABLE}.city ;;
   }
   dimension: test_suggestions {    # only wiht is equal to :)
     sql: ${TABLE}.city ;;
@@ -40,6 +70,29 @@ dimension: test_fixwd {
     type: string
     sql: ${TABLE}.country ;;
   }
+  parameter: test_filter {
+    type: unquoted
+    allowed_value: {
+      label: "Alabama"
+      value: "City"
+    }}
+  dimension: city_o {
+    type: string
+    label_from_parameter: test_filter
+    sql: ${TABLE}.{% parameter test_filter %} ;;
+  }
+#   dimension: treemap_dimension{
+#     type: string
+#     label_from_parameter: treemap_filter
+#     sql: ${TABLE}.{% parameter test_filter %} ;;
+# # sql: ${% parameter treemap_filter %}} ;;
+# # value_format_name: "usd"
+# #     drill_fields: [treemap_sub_dimension]
+#   }
+
+
+
+
 
   dimension_group: created {
     type: time
@@ -88,6 +141,7 @@ dimension: test_fixwd {
 
   measure: count {
     type: count
+    html: <div style = " background-color: #4FBC89 ; font-size:100%; text-align:right">{{rendered_value}}</div> ;;
     drill_fields: [detail*]
   }
 
