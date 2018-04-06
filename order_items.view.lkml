@@ -12,6 +12,12 @@ view: order_items {
     sql: ${TABLE}.inventory_item_id ;;
   }
 
+  dimension: inventory_for_test_sso {
+    type: string
+    sql: ${TABLE}.inventory_item_id ;;
+  }
+
+
   dimension: order_id {
     type: number
     sql: ${TABLE}.order_id ;;

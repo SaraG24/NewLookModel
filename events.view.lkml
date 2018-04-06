@@ -21,6 +21,24 @@ view: events {
     sql: ${TABLE}.created_at ;;
   }
 
+    parameter: test_for_chenna{
+      type: unquoted
+      allowed_value: {
+        label: "IDDD"
+        value: "id"
+      }
+      allowed_value: {
+        label: "use_IDDD"
+        value: "user_id"
+      }
+    }
+
+    dimension: test_param {
+      type: string
+      sql: ${TABLE}.{% parameter test_for_chenna %} ;;
+    }
+
+
 #   dimension: type_id {
 #     type: number
 #     sql: ${TABLE}.type_id ;;

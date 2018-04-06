@@ -1,16 +1,13 @@
 view: derived_table_customer_order_facts {
     derived_table: {
-      persist_for: "5 hours"
       sql:
-      SELECT
-        users_id,
-        MIN(DATE(time)) AS first_order_date,
-        AVERAGE(amount) AS lifetime_amount
+        SELECT
+        id,
+        created_at AS first_order_date,
+        status
       FROM
-        order
-      GROUP BY
-        users_id ;;
-      sql_trigger_value: SELECT FLOOR((UNIX_TIMESTAMP(NOW()) - 60*60*11)/(60*60*11)) ;;
+        orders ;;
+
     }
     dimension: users_id {
       type: number
@@ -22,6 +19,14 @@ view: derived_table_customer_order_facts {
       timeframes: [date, week, month]
       sql: ${TABLE}.first_order_date ;;
     }
+
+#
+#     parameter: test_for_chenna{
+#       allowed_value: {
+#         label: "time"
+#         value: "first_order_week"
+#       }
+#     }
     dimension: lifetime_amount {
       type: number
       value_format: "0.00"

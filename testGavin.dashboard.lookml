@@ -1,5 +1,5 @@
 - dashboard: good_dashb
-  title: good dashb
+  title: good bueno dashb
   layout: newspaper
   elements:
   - title: dashb

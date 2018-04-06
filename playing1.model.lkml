@@ -62,7 +62,10 @@ explore: order_items {
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
-
+  access_filter: {
+    field: order_items.inventory_for_test_sso
+    user_attribute: inventory_for_test_sso
+  }
 
   join: orders {
     type: left_outer
@@ -123,12 +126,12 @@ view: user_metrics {
   }
 }
 
-explore: metrics {
-  extends: [order_items]
-  label: "Order Items two"
-  sql_always_where: ${products.category} = 'Dresses';;
-  fields: [ALL_FIELDS*, -products.rank, -products.category]
-}
+# explore: metrics {
+#   extends: [order_items]
+#   label: "Order Items two"
+#   sql_always_where: ${products.category} = 'Dresses';;
+#   fields: [ALL_FIELDS*, -products.rank, -products.category]
+# }
 
 # map_layer: countries_layer {
 #   file: "world_countries.json"
@@ -149,3 +152,4 @@ explore: metrics {
 explore: users {}
 
 explore: users_nn {}
+explore: derived_table_customer_order_facts{}
