@@ -1,5 +1,11 @@
 connection: "thelook"
 
+# connection: "{% if _user_attributes['email'] == 'sara.guzman@looker.com' %}
+# thelook
+# {% else %}
+# sara_athena
+# {% endif %}"
+
 # include all the views
 include: "*.view"
 
@@ -47,12 +53,16 @@ view: customer_order_facts {
 
 
 explore: inventory_items {
+  label: "Nice stuff"
   join: products {
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
   }
 }
+
+
+
 
 explore: order_items {
   view_name: order_items
