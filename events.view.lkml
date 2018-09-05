@@ -1,4 +1,5 @@
 view: events {
+  suggestions: yes
   sql_table_name: demo_db.events ;;
 
   dimension: id {

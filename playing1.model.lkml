@@ -13,6 +13,7 @@ include: "*.view"
 include: "*.dashboard"
 
 
+
 explore: events {
 #   sql_always_where: ${user_id} => 0 ;;
   join: users {
@@ -32,7 +33,7 @@ view: customer_order_facts {
         order
       GROUP BY
         users_id ;;
-    sql_trigger_value: SELECT FLOOR((UNIX_TIMESTAMP(NOW()) - 60*60*11)/(60*60*11)) ;;
+    # sql_trigger_value: SELECT FLOOR((UNIX_TIMESTAMP(NOW()) - 60*60*11)/(60*60*11)) ;;
   }
   dimension: users_id {
     type: number

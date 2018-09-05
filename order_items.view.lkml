@@ -2,6 +2,7 @@ view: order_items {
   sql_table_name: demo_db.order_items ;;
 
   dimension: id {
+    description: "To Test in Dash"
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
@@ -43,6 +44,10 @@ view: order_items {
     url: "/dashboards/bla?Artist%20Name={{ value }}{{ value }}{{ value }}{{ value }}{{ value }}{{ value }}{{ value }}"
     }
     sql: ${TABLE}.sale_price ;;
+  }
+  measure: test_measure {
+    type: sum
+    sql: ${TABLE}.sales_price ;;
   }
   # dimension: test_country {
   #   map_layer_name: test_country

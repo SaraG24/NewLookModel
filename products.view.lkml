@@ -35,6 +35,12 @@ view: products {
   dimension: retail_price {
     type: number
     sql: ${TABLE}.retail_price ;;
+#     html: ¥ {{rendered_value}} ;;
+      # value_format:"¥#.00;(¥#.00)"
+
+#     named_value_format: yan {
+#       value_format: "¥"
+#     }
   }
 
   dimension: sku {

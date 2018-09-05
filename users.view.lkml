@@ -1,5 +1,6 @@
-view: users {
-  sql_table_name: demo_db.users ;;
+  view: users {
+    suggestions: yes
+    sql_table_name: demo_db.users ;;
 
 #  dimension_group: created {
 #    type: time
@@ -7,7 +8,7 @@ view: users {
 #   sql: ${TABLE}.creted_for ;;
 #  }
 
-  dimension: id {
+    dimension: id {
 #     case: {
 #       when: {
 #         sql: ${TABLE}.id > 8634 ;;
@@ -22,8 +23,8 @@ view: users {
 #     full_suggestions: yes
 #     suggestions: ["It works", "It works too"]
 #     primary_key: yes
-   type: number
-   sql: ${TABLE}.id ;;
+    type: number
+    sql: ${TABLE}.id ;;
   }
   dimension: testst_aticvalue {
     type: string
@@ -101,6 +102,8 @@ view: users {
       time,
       date,
       week,
+      day_of_month,
+      day_of_week,
       month,
       quarter,
       year
@@ -108,57 +111,75 @@ view: users {
     sql: ${TABLE}.created_at ;;
     drill_fields: [created_month, created_year, created_time]
   }
+#     parameter: day_of_week {
+#       suggestable: yes
+#       suggestions: ["Saturday"]
+#       type: unquoted
+#       allowed_value: {
+#         label: "Friday"
+#         value: "Friday"
+#       }
+  parameter: test_filter_week {
+    type: unquoted
+    allowed_value: {
+      label: "Saturday"
+      value: "test_filter_week"
+#       allowed_value: {
+#         label: "Saturday"
+#         value: "Friday,Saturday"
+       }
+    }
 
-  dimension: email {
-    type: string
-    sql: ${TABLE}.email ;;
-  }
+    dimension: email {
+      type: string
+      sql: ${TABLE}.email ;;
+    }
 
-  dimension: first_name {
-    type: string
-    sql: ${TABLE}.first_name ;;
-  }
+    dimension: first_name {
+      type: string
+      sql: ${TABLE}.first_name ;;
+    }
 
-  dimension: gender {
-    type: string
-    sql: ${TABLE}.gender ;;
-  }
+    dimension: gender {
+      type: string
+      sql: ${TABLE}.gender ;;
+    }
 
-  dimension: last_name {
-    type: string
-    sql: ${TABLE}.last_name ;;
-  }
+    dimension: last_name {
+      type: string
+      sql: ${TABLE}.last_name ;;
+    }
 
-  dimension: state {
-    type: string
-    sql: ${TABLE}.state ;;
-  }
+    dimension: state {
+      type: string
+      sql: ${TABLE}.state ;;
+    }
 
-  dimension: zip {
-    type: number
-    sql: ${TABLE}.zip ;;
-  }
+    dimension: zip {
+      type: number
+      sql: ${TABLE}.zip ;;
+    }
 
-  measure: count {
-    type: count
-    html: <div style = " background-color: #4FBC89 ; font-size:100%; text-align:right">{{rendered_value}}</div> ;;
-    drill_fields: [detail*]
-  }
+    measure: count {
+      type: count
+      html: <div style = " background-color: #4FBC89 ; font-size:100%; text-align:right">{{rendered_value}}</div> ;;
+      drill_fields: [detail*]
+    }
 
-  measure: count_test {
-    type: count_distinct
-    sql: ${city} ;;
-  }
+    measure: count_test {
+      type: count_distinct
+      sql: ${city} ;;
+    }
 
-  # ----- Sets of fields for drilling ------
-  set: detail {
-    fields: [
-      id,
-      last_name,
-      first_name,
-      events.count,
-      orders.count,
-      user_data.count
-    ]
+    # ----- Sets of fields for drilling ------
+    set: detail {
+      fields: [
+        id,
+        last_name,
+        first_name,
+        events.count,
+        orders.count,
+        user_data.count
+      ]
+    }
   }
-}
