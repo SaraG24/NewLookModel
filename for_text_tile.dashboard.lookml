@@ -17,6 +17,14 @@
     col: 0
     width: 8
     height: 6
+    embed_style:
+    background_color: "#1f3c86"
+    show_title: false
+    title_color: "#0C2481"
+    show_filters_bar: false
+    tile_text_color: "#0C2481"
+    text_tile_text_color: "#0C2481"
+    tile_background_color: "#FFFFFF"
   - name: TITULO TEST
     type: text
     title_text: TITULO TEST
