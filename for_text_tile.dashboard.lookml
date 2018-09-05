@@ -24,7 +24,7 @@
     show_filters_bar: false
     tile_text_color: "#0C2481"
     text_tile_text_color: "#0C2481"
-    tile_background_color: "#FFFFFF"
+    tile_background_color: "#0C2481"
   - name: TITULO TEST
     type: text
     title_text: TITULO TEST
