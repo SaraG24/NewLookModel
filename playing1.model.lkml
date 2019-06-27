@@ -15,7 +15,7 @@ include: "*.dashboard"
 
 
 explore: events {
-#   sql_always_where: ${user_id} => 0 ;;
+#    sql_always_where: ${user_id} > 0 ;;
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;

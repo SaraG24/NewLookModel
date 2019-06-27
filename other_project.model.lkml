@@ -1,4 +1,5 @@
-connection: "postgres_connection"
+connection: "thelook"
+
 
 # # include all the views
 # include: "*.view"

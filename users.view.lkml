@@ -22,7 +22,7 @@
 #     }
 #     full_suggestions: yes
 #     suggestions: ["It works", "It works too"]
-#     primary_key: yes
+    primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
   }
@@ -35,25 +35,26 @@
     type: string
     sql: CASE WHEN ${id} IS NOT NULL THEN 'TEST' ELSE 'never happens' END ;;
   }
-  dimension: html_test {
-    type: number
-    sql: ${age} ;;
-    html:
-         {% if {{id._value}} <= 20 %}
-         <div style = " background-color: #4FBC89 ; font-size:100%; text-align:right">{{rendered_value}}</div>
-         {% elsif {{id._value}} > 21 and value <= 30 %}
-         <div style = " background-color: #FCF758 ; font-size:100%; text-align:right">{{rendered_value}}</div>
-         {% else %}
-           <p style="color: black; background-color: orange; font-size:100%; text-align:center">{{ rendered_value }}</p>
-         {%endif%} ;;
-  }
+  # dimension: html_test {
+  #   type: number
+  #   sql: ${age} ;;
+  #   html:
+  #       {% if {{id._value}} <= 20 %}
+  #       <div style = " background-color: #4FBC89 ; font-size:100%; text-align:right">{{rendered_value}}</div>
+  #       {% elsif {{id._value}} > 21 and value <= 30 %}
+  #       <div style = " background-color: #FCF758 ; font-size:100%; text-align:right">{{rendered_value}}</div>
+  #       {% else %}
+  #         <p style="color: black; background-color: orange; font-size:100%; text-align:center">{{ rendered_value }}</p>
+  #       {%endif%} ;;
+  # }
 
 
 
-  dimension: age {
-    type: number
-    sql: ${TABLE}.age ;;
-  }
+  # dimension: age {
+  #   type: tier
+  #   style: interval
+  #   sql: ${TABLE}.age ;;
+  # }
 
   dimension: city {
     type: string
